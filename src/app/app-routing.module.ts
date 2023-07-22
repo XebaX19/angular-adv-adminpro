@@ -1,34 +1,25 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { LoginComponent } from './auth/login/login.component';
-import { RegisterComponent } from './auth/register/register.component';
-import { ProgressComponent } from './pages/progress/progress.component';
-import { Grafica1Component } from './pages/grafica1/grafica1.component';
-import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
-import { PagesComponent } from './pages/pages.component';
+import { PagesRoutingModule } from './pages/pages.routing';
+import { AuthRoutingModule } from './auth/auth.routing';
+
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: PagesComponent,
-    children: [
-      { path: 'dashboard', component: DashboardComponent },
-      { path: 'progress', component: ProgressComponent },
-      { path: 'grafica1', component: Grafica1Component },
-      { path: '', redirectTo: '/dashboard', pathMatch: 'full' }, //Si ingresa a la ruta raíz, redirecciona al dashboard
-    ]
-  },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
+  //Para no perder las rutas entre módulos, es una buena práctica colocar los path y los routings donde los encuentro:
+  // path: '/dashboard'   --> PagesRoutingModule
+  // path: '/auth'       --> AuthRoutingModule
+
+  { path: '', redirectTo: '/dashboard', pathMatch: 'full' }, //Si ingresa a la ruta raíz, redirecciona al dashboard
   { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({
-  declarations: [],
   imports: [
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    PagesRoutingModule,
+    AuthRoutingModule
   ],
   exports: [
     RouterModule
